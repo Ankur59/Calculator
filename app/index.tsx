@@ -1,6 +1,7 @@
 import { View, Text, Switch, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
 const Index = () => {
   const [theme, settheme] = useState(false);
   const [result, setresult] = useState("00");
@@ -12,14 +13,15 @@ const Index = () => {
     light1: "#F1F1F1",
     light2: "#F7F7F7",
   };
-  const calculate = ({ Content }) => {
+  const actions = ({ Content }) => {
     if (Content == "C") {
       setresult("");
     } else if (Content == "DEL") {
       setresult(result.substring(0, result.length - 1));
     } else if (Content == "=") {
-      const ans = Number(eval(result).toFixed(3)).toString;
-      setresult(ans);
+      const ans = Number(eval(result).toFixed(3));
+      const res=ans.toString()
+      setresult(res);
     } else {
       setresult(result + Content);
     }
@@ -36,7 +38,7 @@ const Index = () => {
             margin: 9,
             elevation: theme ? 2 : 5,
           }}
-          onPress={() => calculate({ Content })}
+          onPress={() => actions({ Content })}
         >
           <Text
             style={{
@@ -67,7 +69,7 @@ const Index = () => {
 
   const getcolor = (light, dark) => (theme ? dark : light);
   return (
-    <View
+    <SafeAreaView
       style={{
         height: "100%",
         width: "100%",
@@ -130,7 +132,7 @@ const Index = () => {
         <MyButton Content="." type="num" />
         <MyButton Content="=" type="left" />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
